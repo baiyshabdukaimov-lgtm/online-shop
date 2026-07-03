@@ -1,4 +1,5 @@
 import React from 'react';
+import AdminLayout from '../components/AdminLayout/AdminLayout';
 
 const mockReviews = [
   { id: 1, user: "Бакыт А.", product: "Механическая клавиатура", rating: 5, comment: "Клавиатура просто пушка! Тайпинг невероятно сочный, клики четкие. Подсветка яркая, режимов куча. Рекомендую всем геймерам!", date: "01.07.2026" },
@@ -10,6 +11,7 @@ const mockReviews = [
 
 const AdminReviews = () => {
   return (
+    <AdminLayout>
     <div style={{ color: '#fff', padding: '20px', maxWidth: '800px' }}>
       <h2 style={{ marginBottom: '10px' }}>⭐ Отзывы и оценки покупателей</h2>
       <p style={{ color: '#6b7280', marginBottom: '25px', fontSize: '14px' }}>Модерация отзывов, оставленных пользователями после получения заказов.</p>
@@ -41,6 +43,7 @@ const AdminReviews = () => {
         ))}
       </div>
     </div>
+    </AdminLayout>
   );
 };
 

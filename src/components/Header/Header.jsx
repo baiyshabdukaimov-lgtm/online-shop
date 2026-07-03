@@ -1,111 +1,239 @@
+// import React, { useState, useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
+
+// const Header = () => {
+//   const navigate = useNavigate();
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [cartCount, setCartCount] = useState(0);
+//   const [favCount, setFavCount] = useState(0);
+  
+//   // Состояние текущего скина (по умолчанию SPACE)
+//   const [currentSkin, setCurrentSkin] = useState(() => localStorage.getItem('cyber_skin') || 'SPACE');
+
+//   const updateCounts = () => {
+//     const cart = JSON.parse(localStorage.getItem('shop_cart') || '[]');
+//     const favs = JSON.parse(localStorage.getItem('cyber_favorites') || '[]');
+//     setCartCount(cart.length);
+//     setFavCount(favs.length);
+//   };
+
+//   useEffect(() => {
+//     updateCounts();
+//     window.addEventListener('cart-updated', updateCounts);
+//     window.addEventListener('favorites-updated', updateCounts);
+//     return () => {
+//       window.removeEventListener('cart-updated', updateCounts);
+//       window.removeEventListener('favorites-updated', updateCounts);
+//     };
+//   }, []);
+
+//   // Функция переключения скинов
+//   const toggleSkin = () => {
+//     const nextSkin = currentSkin === 'SPACE' ? 'NEON' : 'SPACE';
+//     setCurrentSkin(nextSkin);
+//     localStorage.setItem('cyber_skin', nextSkin);
+    
+//     // Переключаем класс на body, чтобы стили менялись глобально по всему сайту!
+//     document.body.className = `skin-${nextSkin.toLowerCase()}`;
+    
+//     // Вызываем кастомное событие, если другие компоненты должны узнать о смене скина
+//     window.dispatchEvent(new Event('skin-changed'));
+//   };
+
+//   return (
+//     <header className="cyber-header">
+//       <style>{`
+//         .cyber-header {
+//           background: rgba(10, 11, 16, 0.75);
+//           backdrop-filter: blur(15px) saturate(180%);
+//           -webkit-backdrop-filter: blur(15px) saturate(180%);
+//           border-bottom: 2px solid #00f3ff;
+//           box-shadow: 0 4px 30px rgba(0, 243, 255, 0.15), inset 0 -1px 10px rgba(0, 243, 255, 0.1);
+//           position: sticky; top: 0; z-index: 1000; padding: 15px 25px;
+//           font-family: 'Segoe UI', Roboto, sans-serif;
+//         }
+//         .header-container { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto; }
+        
+//         .cyber-logo { cursor: pointer; font-size: 24px; font-weight: 900; color: #fff; letter-spacing: 2px; }
+//         .logo-accent { color: #ff0055; text-shadow: 0 0 12px #ff0055; }
+
+//         .nav-links { display: flex; gap: 12px; align-items: center; }
+
+//         .nav-item {
+//           color: #8fa0b5; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 243, 255, 0.15);
+//           padding: 8px 16px; font-size: 13px; font-weight: 600; text-transform: uppercase;
+//           letter-spacing: 1px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+//           transition: all 0.3s ease;
+//         }
+//         .nav-item:hover { color: #00f3ff; border-color: #00f3ff; box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); }
+
+//         /* Ультра-стильная кнопка Скина */
+//         .skin-btn {
+//           background: linear-gradient(135deg, rgba(255, 165, 0, 0.15) 0%, rgba(255, 69, 0, 0.05) 100%) !important;
+//           border: 1px solid #ffa500 !important; color: #ffa500 !important;
+//           text-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+//         }
+//         .skin-btn:hover {
+//           box-shadow: 0 0 15px #ffa500 !important;
+//           background: linear-gradient(135deg, rgba(255, 165, 0, 0.3) 0%, rgba(255, 69, 0, 0.1) 100%) !important;
+//         }
+
+//         .cart-btn { background: linear-gradient(135deg, rgba(255, 0, 85, 0.2) 0%, rgba(255, 0, 85, 0.05) 100%) !important; border: 1px solid #ff0055 !important; color: #fff !important; }
+//         .cart-btn:hover { box-shadow: 0 0 20px #ff0055 !important; }
+
+//         .badge { background: #ff0055; color: #fff; padding: 2px 6px; border-radius: 20px; font-size: 11px; box-shadow: 0 0 8px #ff0055; }
+//         .cart-badge { background: #00f3ff; color: #000; box-shadow: 0 0 8px #00f3ff; }
+
+//         .burger-btn { display: flex; flex-direction: column; justify-content: space-around; width: 30px; height: 20px; background: transparent; border: none; cursor: pointer; padding: 0; z-index: 101; }
+//         .burger-line { width: 30px; height: 3px; background: #00f3ff; border-radius: 4px; transition: all 0.3s ease; box-shadow: 0 0 8px rgba(0, 243, 255, 0.5); }
+//         .open .line1 { transform: translateY(7px) rotate(45deg); background: #ff0055; }
+//         .open .line2 { opacity: 0; }
+//         .open .line3 { transform: translateY(-6px) rotate(-45deg); background: #ff0055; }
+
+//         .mobile-menu {
+//           position: fixed; top: 0; right: -100%; width: 290px; height: 100vh; background: rgba(10, 11, 16, 0.96);
+//           backdrop-filter: blur(20px); border-left: 2px solid #00f3ff; padding: 90px 25px;
+//           display: flex; flex-direction: column; gap: 15px; transition: right 0.4s ease; z-index: 100;
+//         }
+//         .mobile-menu.active { right: 0; box-shadow: -5px 0 25px rgba(0, 243, 255, 0.2); }
+
+//         @media (max-width: 900px) {
+//           .desktop-nav { display: none !important; }
+//           .burger-btn { display: flex !important; }
+//         }
+//         @media (min-width: 901px) {
+//           .burger-btn { display: none !important; }
+//           .mobile-menu { display: none !important; }
+//         }
+//       `}</style>
+
+//       <div className="header-container">
+//         <div className="cyber-logo" onClick={() => navigate('/')}>
+//           CYBER<span className="logo-accent">SHOP</span>
+//         </div>
+
+//         {/* НАВИГАЦИЯ ДЛЯ ПК */}
+//         <nav className="nav-links desktop-nav">
+//           {/* Наша сочная кнопка скина */}
+//           <button className="nav-item skin-btn" onClick={toggleSkin}>
+//             🎨 СКИН: {currentSkin}
+//           </button>
+          
+//           <button className="nav-item" onClick={() => navigate('/admin')}>⚙️ Админка</button>
+//           <button className="nav-item" onClick={() => navigate('/history')}>📜 История</button>
+//           <button className="nav-item" onClick={() => navigate('/favorites')}>
+//             ❤️ Избранное {favCount > 0 && <span className="badge">{favCount}</span>}
+//           </button>
+//           <button className="nav-item cart-btn" onClick={() => navigate('/cart')}>
+//             🛒 Корзина {cartCount > 0 && <span className="badge cart-badge">{cartCount}</span>}
+//           </button>
+//         </nav>
+
+//         {/* БУРГЕР */}
+//         <button className={`burger-btn ${isOpen ? 'open' : ''}`} onClick={() => setIsOpen(!isOpen)}>
+//           <div className="burger-line line1"></div>
+//           <div className="burger-line line2"></div>
+//           <div className="burger-line line3"></div>
+//         </button>
+//       </div>
+
+//       {/* МОБИЛЬНОЕ МЕНЮ */}
+//       <div className={`mobile-menu ${isOpen ? 'active' : ''}`}>
+//         <button className="nav-item skin-btn" style={{ justifyContent: 'center' }} onClick={() => { toggleSkin(); setIsOpen(false); }}>
+//           🎨 СКИН: {currentSkin}
+//         </button>
+//         <button className="nav-item" onClick={() => { navigate('/admin'); setIsOpen(false); }}>⚙️ Админ Панель</button>
+//         <button className="nav-item" onClick={() => { navigate('/history'); setIsOpen(false); }}>📜 История</button>
+//         <button className="nav-item" onClick={() => { navigate('/favorites'); setIsOpen(false); }}>
+//           ❤️ Избранное {favCount > 0 && <span className="badge">{favCount}</span>}
+//         </button>
+//         <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.05)', margin: '10px 0' }} />
+//         <button className="nav-item cart-btn" style={{ justifyContent: 'center', padding: '14px' }} onClick={() => { navigate('/cart'); setIsOpen(false); }}>
+//           🛒 КОРЗИНА ({cartCount})
+//         </button>
+//       </div>
+//     </header>
+//   );
+// };
+
+// export default Header;
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import './Header.css';
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem('cyber-theme') || 'cyberpunk');
+  const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-  const [favCount, setFavCount] = useState(0); // Состояние для количества лайков
-  
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [favCount, setFavCount] = useState(0);
+
+  // Функция строго читает те ключи, которые у тебя в ProductCard.jsx!
+  const updateCounts = () => {
+    const cart = JSON.parse(localStorage.getItem('shop_cart') || '[]');
+    const favorites = JSON.parse(localStorage.getItem('cyber_favorites') || '[]');
+    
+    // Считаем общее количество вещей в корзине
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    
+    setCartCount(totalItems);
+    setFavCount(favorites.length);
+  };
 
   useEffect(() => {
-    // Функция обновления корзины
-    const updateCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem('shop_cart') || '[]');
-      setCartCount(cart.length);
-    };
+    updateCounts();
 
-    // Функция обновления избранного
-    const updateFavCount = () => {
-      const favs = JSON.parse(localStorage.getItem('cyber_favorites') || '[]');
-      setFavCount(favs.length);
-    };
-
-    updateCartCount();
-    updateFavCount();
-
-    // Слушатели событий для синхронизации
-    window.addEventListener('storage', () => { updateCartCount(); updateFavCount(); });
-    window.addEventListener('cart-updated', updateCartCount); 
-    window.addEventListener('favorites-updated', updateFavCount); 
+    // Слушаем кастомные триггеры из ProductCard.jsx
+    window.addEventListener('storage', updateCounts);
+    window.addEventListener('favupdated', updateCounts); // Буква 'u' теперь маленькая!
+    window.addEventListener('cartUpdated', updateCounts);
 
     return () => {
-      window.removeEventListener('storage', () => { updateCartCount(); updateFavCount(); });
-      window.removeEventListener('cart-updated', updateCartCount);
-      window.removeEventListener('favorites-updated', updateFavCount);
+      window.removeEventListener('storage', updateCounts);
+      window.removeEventListener('favupdated', updateCounts);
+      window.removeEventListener('cartUpdated', updateCounts);
     };
   }, []);
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('cyber-theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    const themes = ['cyberpunk', 'matrix', 'space'];
-    const nextTheme = themes[(themes.indexOf(theme) + 1) % themes.length];
-    setTheme(nextTheme);
-  };
-
   return (
-    <header className="cyber-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 30px', position: 'sticky', top: 0, zIndex: 1000, background: 'var(--panel-bg)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--primary-neon)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-        {location.pathname !== '/' ? (
-          <button onClick={() => navigate('/')} style={{ padding: '8px 16px', background: 'none', border: '1px solid var(--secondary-neon)', color: 'var(--secondary-neon)', cursor: 'pointer', borderRadius: '4px', fontWeight: 'bold' }}>
-            🔙 НА ГЛАВНУЮ
-          </button>
-        ) : (
-          <button className="burger-btn" onClick={() => setIsOpen(!isOpen)} style={{ padding: '8px 16px', background: 'none', border: '1px solid var(--primary-neon)', color: 'var(--primary-neon)', cursor: 'pointer', borderRadius: '4px', fontWeight: 'bold' }}>
-            {isOpen ? '✕ ЗАКРЫТЬ' : '⚡ КИБЕР-МЕНЮ'}
-          </button>
-        )}
+    <header className="cyber-header">
+      <div className="header-container">
         
-        <Link to="/" style={{ color: 'var(--primary-neon)', fontSize: '22px', fontWeight: 'bold', textDecoration: 'none', textShadow: '0 0 10px var(--shadow-color)' }}>
-          CYBER-SHOP
-        </Link>
-      </div>
-
-      {isOpen && location.pathname === '/' && (
-        <div className="dropdown-menu" style={{ position: 'absolute', top: '70px', left: '30px', background: 'rgba(11,12,16,0.95)', border: '1px solid var(--primary-neon)', padding: '20px', borderRadius: '8px', zIndex: 2000, display: 'flex', flexDirection: 'column', gap: '15px', width: '250px' }}>
-          <div>
-            <h4 style={{ color: 'var(--secondary-neon)', margin: '0px 0px 8px 0px' }}>Навигация</h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <li><Link to="/" style={{ color: '#fff', textDecoration: 'none' }} onClick={() => setIsOpen(false)}>Главная витрина</Link></li>
-              <li><Link to="/favorites" style={{ color: '#fff', textDecoration: 'none' }} onClick={() => setIsOpen(false)}>❤️ Избранное</Link></li>
-              <li><Link to="/pc-builder" style={{ color: '#fff', textDecoration: 'none' }} onClick={() => setIsOpen(false)}>🛠️ Сборщик ПК</Link></li>
-              <li><Link to="/wheel" style={{ color: '#fff', textDecoration: 'none' }} onClick={() => setIsOpen(false)}>🎰 Колесо Фортуны</Link></li>
-              <li><Link to="/admin" style={{ color: '#fff', textDecoration: 'none' }} onClick={() => setIsOpen(false)}>Панель Админа</Link></li>
-            </ul>
-          </div>
+        {/* ЛЕВАЯ ЧАСТЬ */}
+        <div className="cyber-menu-wrapper">
+          <button 
+            className="cyber-btn menu-trigger-btn" 
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            ⚡ КИБЕР-МЕНЮ
+          </button>
+          
+          
+          {menuOpen && (
+            <div className="cyber-dropdown dropdown-animated">
+              <Link to="/" onClick={() => setMenuOpen(false)}>🏠 На Главную</Link>
+              <Link to="/pc-build" onClick={() => setMenuOpen(false)}>🖥️ Сборка ПК</Link>
+              <Link to="/wheel" onClick={() => setMenuOpen(false)}>🎡 Колесо фортуны</Link>
+              <Link to="/history" onClick={() => setMenuOpen(false)}>📜 История покупок</Link>
+              <Link to="/admin" onClick={() => setMenuOpen(false)}>⚙️ Admin</Link>
+            </div>
+          )}
         </div>
-      )}
 
-      <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-        <button onClick={toggleTheme} style={{ background: 'none', border: '1px solid var(--secondary-neon)', color: 'var(--secondary-neon)', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
-          🎨 СКИН: {theme.toUpperCase()}
-        </button>
+        {/* СРЕДНЯЯ ЧАСТЬ */}
+        <div className="logo-center">
+          <span className="logo-white">CYBER</span>
+          <span className="logo-pink">SHOP</span>
+        </div>
 
-        {/* Кнопка "Избранное" со счетчиком лайков */}
-        <Link to="/favorites" style={{ color: '#fff', textDecoration: 'none', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-          ❤️ Избранное
-          {favCount > 0 && (
-            <span style={{ background: '#ff0055', color: '#fff', borderRadius: '50%', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold', boxShadow: '0 0 8px #ff0055' }}>
-              {favCount}
-            </span>
-          )}
-        </Link>
+        {/* ПРАВАЯ ЧАСТЬ */}
+        <div className="desktop-nav-right">
+          <Link to="/favorites" className="cyber-btn nav-btn-favorites">
+            💖 ИЗБРАННОЕ {favCount > 0 && <span className="cyber-badge fav-badge">{favCount}</span>}
+          </Link>
+          <Link to="/cart" className="cyber-btn nav-btn-cart">
+            🛒 КОРЗИНА {cartCount > 0 && <span className="cyber-badge cart-badge">{cartCount}</span>}
+          </Link>
+        </div>
 
-        {/* Кнопка "Корзина" */}
-        <Link to="/cart" style={{ color: '#fff', textDecoration: 'none', fontSize: '18px', position: 'relative', display: 'flex', alignItems: 'center', gap: '5px' }}>
-          🛒 Корзина
-          {cartCount > 0 && (
-            <span style={{ background: 'var(--primary-neon)', color: '#000', borderRadius: '50%', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold', boxShadow: '0 0 8px var(--primary-neon)' }}>
-              {cartCount}
-            </span>
-          )}
-        </Link>
       </div>
     </header>
   );

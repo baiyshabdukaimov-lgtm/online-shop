@@ -1,0 +1,199 @@
+/* ==========================================================================
+   1. БАЗОВЫЕ СТИЛИ ДЛЯ ПК (Твой рабочий и ровный вариант)
+   ========================================================================== */
+.cyber-header {
+  background-color: #030508;
+  border-bottom: 2px solid #00f3ff;
+  padding: 18px 0;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 243, 255, 0.1);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 25px;
+  box-sizing: border-box;
+}
+
+.cyber-btn {
+  background: transparent;
+  border: 1px solid #232a3b;
+  color: #8fa0b5;
+  padding: 10px 18px;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-trigger-btn {
+  border-color: #ffcc00;
+  color: #ffcc00;
+}
+.menu-trigger-btn:hover {
+  background: rgba(255, 204, 0, 0.1);
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.3);
+}
+
+.logo-center {
+  grid-column: 2;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.logo-white { color: #ffffff; }
+.logo-pink {
+  color: #ff0055;
+  text-shadow: 0 0 15px rgba(255, 0, 85, 0.7);
+  margin-left: 2px;
+}
+
+.desktop-nav-right {
+  grid-column: 3;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.nav-btn-cart {
+  border-color: #ff0055;
+  color: #ff0055;
+}
+.nav-btn-cart:hover {
+  background: rgba(255, 0, 85, 0.1);
+  box-shadow: 0 0 12px rgba(255, 0, 85, 0.3);
+}
+
+.nav-btn-favorites:hover {
+  border-color: #fff;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cyber-menu-wrapper {
+  grid-column: 1;
+  position: relative;
+  display: inline-block;
+}
+
+.cyber-dropdown {
+  position: absolute;
+  top: 140%;
+  left: 0;
+  background: rgba(10, 14, 22, 0.98);
+  border: 1px solid #00f3ff;
+  border-radius: 8px;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  z-index: 10000;
+  box-shadow: 0 10px 30px rgba(0, 243, 255, 0.3);
+  backdrop-filter: blur(12px);
+}
+
+.cyber-dropdown a {
+  color: #a5b7cc;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.cyber-dropdown a:last-child { border-bottom: none; }
+.cyber-dropdown a:hover {
+  background: rgba(0, 243, 255, 0.08);
+  color: #00f3ff;
+  padding-left: 26px;
+}
+
+.cyber-badge {
+  font-size: 11px;
+  font-weight: 900;
+  padding: 2px 7px;
+  border-radius: 20px;
+  margin-left: 8px;
+  display: inline-block;
+}
+.cart-badge { background: #ff0055; color: #fff; box-shadow: 0 0 10px #ff0055; }
+.fav-badge { background: #00f3ff; color: #000; box-shadow: 0 0 10px #00f3ff; }
+
+@keyframes cyberSlipDown {
+  from { opacity: 0; transform: translateY(-15px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.dropdown-animated { animation: cyberSlipDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+
+/* ==========================================================================
+   2. АДАПТИВ ДЛЯ ТЕЛЕФОНОВ (FIX БАГА СЖАТИЯ)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .cyber-header {
+    padding: 12px 0; /* Уменьшаем отступы сверху/снизу */
+  }
+
+  .header-container {
+    padding: 0 12px; /* Прижимаем элементы аккуратно к краям экрана */
+    gap: 8px;
+  }
+
+  /* Уменьшаем шрифты логотипа, чтобы не занимал много места */
+  .logo-center {
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+
+  /* Кнопка Кибер-меню на мобилках компактнее */
+  .cyber-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  /* Изменяем отображение правой панели */
+  .desktop-nav-right {
+    gap: 6px;
+  }
+
+  /* Магия: ужимаем кнопки до иконок на мелких экранах */
+  .nav-btn-favorites, .nav-btn-cart {
+    padding: 8px 10px;
+    font-size: 14px; /* Оставляем размер только для эмодзи */
+  }
+
+  /* Скрываем сам текст, оставляя только эмодзи и цифру! */
+  .nav-btn-favorites {
+    content: "💖"; 
+    color: transparent;
+    text-shadow: 0 0 0 #ff0055; /* Сохраняем цвет эмодзи */
+  }
+  
+  .nav-btn-cart {
+    content: "🛒";
+    color: transparent;
+    text-shadow: 0 0 0 #ff0055;
+  }
+
+  /* Смещаем выпадашку чуть ближе к краю, чтобы не улетала */
+  .cyber-dropdown {
+    min-width: 220px;
+    top: 130%;
+  }
+}

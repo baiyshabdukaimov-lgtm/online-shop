@@ -41,7 +41,7 @@ const ProductCard = ({ product }) => {
       showToast(`❤️ Добавлено в избранное`);
     }
     localStorage.setItem('cyber_favorites', JSON.stringify(favorites));
-    window.dispatchEvent(new Event('favorites-updated'));
+    window.dispatchEvent(new Event('favUpdated'));
   };
 
   const handleAddToCart = (e) => {
@@ -50,7 +50,7 @@ const ProductCard = ({ product }) => {
     cart.push({ ...product, finalPrice });
     localStorage.setItem('shop_cart', JSON.stringify(cart));
     showToast(`🛒 Добавлено в корзину!`);
-    window.dispatchEvent(new Event('cart-updated'));
+    window.dispatchEvent(new Event('cartUpdated'));
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AdminLayout from '../components/AdminLayout/AdminLayout';
 
 const mockChats = [
   {
@@ -48,6 +49,7 @@ const AdminChats = () => {
   };
 
   return (
+    <AdminLayout>
     <div style={{ color: '#fff', padding: '20px', maxWidth: '1000px' }}>
       <h2 style={{ marginBottom: '25px' }}>💬 Служба поддержки и Чаты с клиентами</h2>
       
@@ -111,6 +113,7 @@ const AdminChats = () => {
         </div>
       </div>
     </div>
+    </AdminLayout>
   );
 };
 

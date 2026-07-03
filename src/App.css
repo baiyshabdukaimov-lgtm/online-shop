@@ -906,3 +906,27 @@ body {
 @media (max-width: 768px) {
   .pc-builder-grid { grid-template-columns: 1fr; }
 }
+/* Цвета по умолчанию (Default Киберпанк) */
+body[data-theme="default"] {
+  --main-bg: #06080c;
+  --neon-cyan: #00f3ff;
+  --neon-pink: #ff0055;
+}
+
+/* Цвета космической темы (Space) */
+body[data-theme="space"] {
+  --main-bg: #0f0c1b; /* Глубокий фиолетовый космос */
+  --neon-cyan: #9d4edd; /* Пурпурный неон */
+  --neon-pink: #240046;
+}
+body[data-theme="shama"] {
+  --main-bg: #0f0c1b; /* Глубокий фиолетовый космос */
+  --neon-cyan: #ff0000; /* Пурпурный неон */
+  --neon-pink: #043e55;
+}
+
+/* И теперь во всем проекте используй переменные вместо жестких цветов, например: */
+.cyber-header {
+  background-color: var(--main-bg);
+  border-bottom: 2px solid var(--neon-cyan);
+}
