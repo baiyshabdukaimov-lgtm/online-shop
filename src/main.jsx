@@ -5,6 +5,7 @@ import { router } from "./router";
 import './App.css'
 import { ToastProvider } from './context/ToastContext';
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ToastProvider>

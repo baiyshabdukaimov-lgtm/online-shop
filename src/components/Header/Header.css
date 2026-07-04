@@ -197,3 +197,29 @@
     top: 130%;
   }
 }
+/* Стильный селект для выбора языков */
+.cyber-lang-select {
+  background: #12131a;
+  border: 1px solid #00f3ff;
+  color: #00f3ff;
+  padding: 8px 10px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  font-size: 13px;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+.cyber-lang-select option {
+  background: #0d1117;
+  color: #fff;
+}
+
+/* Фикс для адаптива мобилок */
+@media (max-width: 768px) {
+  .cyber-lang-select {
+    padding: 6px 4px;
+    font-size: 11px;
+  }
+}
